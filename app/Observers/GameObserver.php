@@ -7,19 +7,25 @@ use App\Models\Game;
 class GameObserver
 {
     /**
-     * Handle the Game "created" event.
+     * Handle the Game "created" event. Akkor fut le, ha már elkészült a modell.
+     * Itt a mentés miatt egyből lesz egy update is.
      */
     public function created(Game $game): void
     {
-        //
+        if (auth()->check()) {
+            $game->created_by = auth()->user()->id;
+            $game->save();
+        }
     }
 
     /**
-     * Handle the Game "updated" event.
+     * Handle the Game "updated" event. Ha a funkció ING-re végződik, akkor a lefutás ELŐTT hajtódik végre.
      */
-    public function updated(Game $game): void
+    public function updating(Game $game): void
     {
-        //
+        if (auth()->check()) {
+            $game->updated_by = auth()->user()->id;
+        }
     }
 
     /**
