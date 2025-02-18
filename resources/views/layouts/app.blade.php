@@ -42,7 +42,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">Admin</a>
                             <div class="dropdown-menu" aria-labelledby="dropdownId">
-                                <a class="dropdown-item" href="#">Add new game</a>
+                                @can('create', App\Models\Game::class)<a class="dropdown-item" href="{{route('games.create')}}">Add new game</a>@endcan
                                 <a class="dropdown-item" href="{{route('login')}}">Login</a>
                             </div>
                         </li>

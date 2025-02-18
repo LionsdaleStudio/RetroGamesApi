@@ -13,7 +13,15 @@ class GamePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        if ($user->role_id == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function showMine(User $user, Game $game): bool {
+        return $user->id === $game->id;
     }
 
     /**
@@ -21,7 +29,13 @@ class GamePolicy
      */
     public function view(User $user, Game $game): bool
     {
-        return false;
+        return $user->id === $game->id;
+        /* if ($user->id === $game->id) {
+            return true;
+        }
+        else {
+            return false;
+        } */
     }
 
     /**
@@ -29,7 +43,11 @@ class GamePolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        if ($user->role_id === 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -62,5 +80,15 @@ class GamePolicy
     public function forceDelete(User $user, Game $game): bool
     {
         return false;
+    }
+
+    public function before(User $user): bool|null {
+        if ($user->role_id == 3) { // 3-as id a SUPERADMINDEVELOPER MINDENES
+            return true;
+        }
+        else {
+            return null;
+        }
+    
     }
 }

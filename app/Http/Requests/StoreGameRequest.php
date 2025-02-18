@@ -11,7 +11,7 @@ class StoreGameRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+         return auth()->user()->can('create', \App\Models\Game::class);
     }
 
     /**

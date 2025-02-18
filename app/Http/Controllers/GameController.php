@@ -13,8 +13,16 @@ class GameController extends Controller
      */
     public function index()
     {
-        $games = Game::all();
-        return view('games.index', ["games" => $games]);
+        if (auth()->hasUser()) { //Ha van bejelentkezett USER
+            if (auth()->user()->can('viewAny', Game::class)) { //És engedély
+                $games = Game::all();
+                return view('games.index', ["games" => $games]);
+            }
+        }
+        else {
+            abort(403); //Forbidden error
+        }
+
     }
 
     /**
@@ -22,7 +30,7 @@ class GameController extends Controller
      */
     public function create()
     {
-        //
+        return view('games.create');
     }
 
     /**
@@ -30,7 +38,7 @@ class GameController extends Controller
      */
     public function store(StoreGameRequest $request)
     {
-        //
+        dd($request);
     }
 
     /**
